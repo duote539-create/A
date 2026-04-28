@@ -1,0 +1,102 @@
+// 高级示例程序
+
+// 导入标准库
+import "base";
+import "network";
+import "concurrent";
+
+// 结构体定义
+struct Point {
+    int x;
+    int y;
+}
+
+// 类定义
+class Person {
+    string name;
+    int age;
+    
+    // 构造函数
+    Person(string n, int a) {
+        name = n;
+        age = a;
+    }
+    
+    // 方法
+    void sayHello() {
+        print("Hello, my name is ", name);
+        print("I am ", age, " years old");
+    }
+}
+
+// 函数定义
+function<T> max(T a, T b) {
+    return a > b ? a : b;
+}
+
+function fibonacci(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// 主函数
+function main() {
+    // 测试结构体
+    Point p = Point(10, 20);
+    print("Point: (", p.x, ", ", p.y, ")");
+    
+    // 测试类
+    Person person = Person("Alice", 30);
+    person.sayHello();
+    
+    // 测试泛型函数
+    int maxInt = max(10, 20);
+    float maxFloat = max(3.14, 2.718);
+    print("Max int: ", maxInt);
+    print("Max float: ", maxFloat);
+    
+    // 测试递归函数
+    print("Fibonacci sequence:");
+    for (int i = 0; i < 10; i++) {
+        print("fib(", i, ") =", fibonacci(i));
+    }
+    
+    // 测试数组
+    int[] numbers = [1, 2, 3, 4, 5];
+    print("Array length: ", numbers.length);
+    print("Array elements:");
+    foreach (var number in numbers) {
+        print(number);
+    }
+    
+    // 测试并发
+    print("Testing concurrency:");
+    concurrent.Thread thread = concurrent.Thread(() => {
+        for (int i = 0; i < 5; i++) {
+            print("Thread: ", i);
+            concurrent.Thread.sleep(100);
+        }
+    });
+    thread.start();
+    
+    // 主线程
+    for (int i = 0; i < 5; i++) {
+        print("Main: ", i);
+        concurrent.Thread.sleep(150);
+    }
+    
+    // 等待线程完成
+    thread.join();
+    
+    // 测试网络（注释掉，避免实际网络请求）
+    // print("Testing network:");
+    // network.HttpResponse response = network.Http.get("https://api.example.com");
+    // print("Status code: ", response.statusCode);
+    
+    print("Program completed!");
+}
+
+// 调用主函数
+main();
